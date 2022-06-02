@@ -1,0 +1,248 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Roles {
+  ADMIN
+  USER
+}
+
+enum Sexes {
+  MAN
+  WOMAN
+}
+
+enum Types {
+  CASUAL
+  SUPPORTING
+  YOUNG
+  HONORABLE
+}
+
+enum FuelTypes {
+  AVGAS
+  AVTUR
+  KEROSENE
+  SOLAR_OIL
+  DIESEL_OIL
+  FUEL_OIL
+  BIODIESEL
+  GASOLINE
+}
+
+model accounts {
+  accountId Int @id @default(autoincrement())
+
+  email String @unique
+  firstname String
+  lastname String
+  phone String?
+  description String?
+
+  stations accounts_stations[]
+
+  hash String
+  salt String
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([firstname, lastname])
+}
+
+model stations {
+  stationId Int @id @default(autoincrement())
+
+  stationName String @unique
+
+  country String
+  city String
+  street String
+  postalCode String
+
+  description String?
+
+  accounts accounts_stations[]
+  vehicles vehicles[]
+
+  vehicles_equipments vehicles_equipments[]
+  equipments equipments[]
+  firefighters firefighters[]
+  firefighters_courses firefighters_courses[]
+  courses courses[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model accounts_stations {
+  account accounts @relation(fields: [accountId], references: [accountId])
+  accountId Int
+
+  station stations @relation(fields: [stationId], references: [stationId])
+  stationId Int
+
+  role Roles @default(USER)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([accountId, stationId])
+}
+
+model vehicles {
+  vehicleId Int @id @default(autoincrement())
+
+  station stations @relation(fields: [stationId], references: [stationId])
+  stationId Int
+
+  vehicleName String
+  registration String @unique
+  producer String
+  trademark String
+  type String
+  productionDate DateTime
+  VIN String @unique
+  operationalNumber String?
+  fuelType FuelTypes @default(GASOLINE)
+  fuelCapacity Float?
+  waterCapacity Float?
+
+  nextInspectionDate DateTime
+  CNBOP String?
+  nextInsuranceTerm DateTime
+  policyNumber String?
+
+  additionalInfo String?
+  comments String?
+
+  equipments vehicles_equipments[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([stationId, vehicleName])
+}
+
+model vehicles_equipments {
+  station stations @relation(fields: [stationId], references: [stationId])
+  stationId Int
+
+  vehicle vehicles @relation(fields: [vehicleId], references: [vehicleId])
+  vehicleId Int
+
+  equipment equipments @relation(fields: [equipmentId], references: [equipmentId])
+  equipmentId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([stationId, vehicleId, equipmentId])
+}
+
+model equipments {
+  equipmentId Int @id @default(autoincrement())
+
+  station stations @relation(fields: [stationId], references: [stationId])
+  stationId Int
+
+  vehicles vehicles_equipments[]
+
+  type String
+  trademark String
+  productionDate DateTime
+  fuelType FuelTypes @default(GASOLINE)
+  technicalExamination DateTime
+  CNBOP String?
+  
+  additionalInfo String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model firefighters {
+  firefighter_id Int @id @default(autoincrement())
+
+  station stations @relation(fields: [stationId], references: [stationId])
+  stationId Int
+
+  type Types @default(CASUAL)
+  registrationNumber String?
+
+  shortname String
+  firstname String?
+  secondName String?
+  lastname String?
+  sex Sexes @default(MAN)
+  birthDate DateTime?
+  birthPlace String?
+  fatherName String?
+  pesel String?
+  documentNumber String?
+  education String?
+
+  country String?
+  city String?
+  street String?
+  postalCode String?
+  phone String?
+  phone2 String?
+  email String?
+  bankAccount String?
+
+  drivingLicense Boolean
+  additionalInfo String?
+
+  courses firefighters_courses[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([stationId, shortname])
+}
+
+model firefighters_courses {
+  station stations @relation(fields: [stationId], references: [stationId])
+  stationId Int
+
+  course courses @relation(fields: [courseId], references: [courseId])
+  courseId Int
+
+  firefighter firefighters @relation(fields: [firefighter_id], references: [firefighter_id])
+  firefighter_id Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([stationId, courseId, firefighter_id])
+}
+
+model courses {
+  courseId Int @id @default(autoincrement())
+
+  station stations @relation(fields: [stationId], references: [stationId])
+  stationId Int
+
+  startTime DateTime
+  endTime DateTime
+
+  courseName String
+  description String?
+
+  firefighters firefighters_courses[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([stationId, courseName])
+}

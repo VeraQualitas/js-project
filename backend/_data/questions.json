@@ -1,0 +1,22 @@
+[
+    {
+        "question_id": 1,
+        "question_type": "CLOSED_RADIO",
+        "question_text": "Kim jestes?"
+    },
+    {
+        "question_id": 2,
+        "question_type": "CLOSED_CHECK",
+        "question_text": "Których obowiązków starasz się unikać za wszelką cenę?"
+    },
+    {
+        "question_id": 3,
+        "question_type": "SCALE",
+        "question_text": "Jaki jest Twój poziom szczęscia?"
+    },
+    {
+        "question_id": 4,
+        "question_type": "OPENED",
+        "question_text": "Ile masz lat?"
+    }
+]

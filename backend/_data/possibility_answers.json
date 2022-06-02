@@ -1,0 +1,38 @@
+[
+    {
+        "possibility_answer_id": 1,
+        "question_id": 1,
+        "answer_text": "Mężczyzną"
+    },
+    {
+        "possibility_answer_id": 2,
+        "question_id": 1,
+        "answer_text": "Kobietą"
+    },
+    {
+        "possibility_answer_id": 3,
+        "question_id": 1,
+        "answer_text": "Kimś innym"
+    },
+
+    {
+        "possibility_answer_id": 4,
+        "question_id": 2,
+        "answer_text": "Odkurzanie"
+    },
+    {
+        "possibility_answer_id": 5,
+        "question_id": 2,
+        "answer_text": "Pranie"
+    },
+    {
+        "possibility_answer_id": 6,
+        "question_id": 2,
+        "answer_text": "Mycie naczyń"
+    },
+    {
+        "possibility_answer_id": 7,
+        "question_id": 2,
+        "answer_text": "Mycie podłogi"
+    }
+]
