@@ -1,7 +1,7 @@
-@email = "1234@1234.1234"
-@password = "1234"
-@firstname = "x"
-@lastname = "v"
+@email = "123@123.123"
+@password = "123"
+@firstname = "1234"
+@lastname = "1234"
 
 
 
@@ -32,8 +32,7 @@ Content-Type: application/json
 @access_token = {{login.response.body.$.data.$.accessToken}}
 
 ### AUTHENTICATE USER
-POST http://localhost:5000/accounts/authenticate HTTP/2.1
+GET  http://localhost:5000/accounts/authenticate HTTP/2.1
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
-{}

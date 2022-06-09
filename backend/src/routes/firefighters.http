@@ -1,0 +1,121 @@
+@email = "123@123.123"
+@password = "123"
+@firstname = "123"
+@lastname = "123"
+
+### LOGIN
+# @name login
+POST http://localhost:5000/accounts/login HTTP/2.1
+Content-Type: application/json
+
+{
+    "email": {{email}},
+    "password": {{password}}
+}
+
+###
+
+@access_token = {{login.response.body.$.data.$.accessToken}}
+
+### AUTHENTICATE USER
+GET  http://localhost:5000/accounts/authenticate HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+### GET STATIONS
+GET  http://localhost:5000/stations HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### GET STATION FIREFIGHTERS
+GET  http://localhost:5000/stations/1/firefighters HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### GET FIREFIGHTER
+GET  http://localhost:5000/firefighters/2 HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### GET FIREFIGHTER COURSES
+GET  http://localhost:5000/firefighters/2/courses HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+### ADD FIREFIGHTER
+POST http://localhost:5000/firefighters HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "stationId": "1",
+    "type": "CASUAL",
+    "registrationNumber": "76f7f",
+    "shortname": "f76f76f",
+    "firstname": "f67f67",
+    "secondName": "f76f7f",
+    "lastname": "f76f7f7",
+    "sex": "MAN",
+    "birthDate": "2020-03-19T14:21:00+0200",
+    "birthPlace": "tfyfyf",
+    "fatherName": "AVGAS",
+    "pesel": "1.3",
+    "documentNumber": "1.2",
+    "education": "2020-03-19T14:21:00+0200",
+    "country": "dsdd",
+    "city": "2020-03-19T14:21:00+0200",
+    "street": "765",
+    "postalCode": "cfgcg",
+    "phone": "cgfc",
+    "phone2": "",
+    "email": "",
+    "bankAccount": "",
+    "drivingLicense": true,
+    "additionalInfo": ""
+}
+
+###
+
+### UPDATE FIREFIGHTER
+PUT http://localhost:5000/firefighters/1 HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "type": "CASUAL",
+    "registrationNumber": "76f7f",
+    "shortname": "f76f76f",
+    "firstname": "f67f67",
+    "secondName": "f76f7f",
+    "lastname": "f76f7f7",
+    "sex": "WOMAN",
+    "birthDate": "2020-03-19T14:21:00+0200",
+    "birthPlace": "tfyfyf",
+    "fatherName": "AVGAS",
+    "pesel": "1.3",
+    "documentNumber": "1.2",
+    "education": "2020-03-19T14:21:00+0200",
+    "country": "dsdd",
+    "city": "2020-03-19T14:21:00+0200",
+    "street": "765",
+    "postalCode": "cfgcg",
+    "phone": "cgfc",
+    "phone2": "",
+    "email": "",
+    "bankAccount": "",
+    "drivingLicense": true,
+    "additionalInfo": ""
+}
+
+###
+
+### DELETE FIREFIGHTER
+DELETE http://localhost:5000/firefighters/1 HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###

@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 
-import { registerAccountService, findAccountByEmail } from "../services/accounts.service";
+import { registerAccountService, findAccountByEmailService } from "../services/accounts.service";
 import { RegisterAccountInput, LoginAccountInput } from "../schemas/accounts.schema";
 import { verifyPassword } from "../utils/hash";
 import { server } from "../app";
@@ -26,6 +26,7 @@ export const registerAccount = async (request: FastifyRequest<{ Body: RegisterAc
 
         const response = {
             success: true,
+            message: 'Registered successfully. ',
             data: {}
         };
 
@@ -42,7 +43,7 @@ export const loginAccount = async (request: FastifyRequest<{ Body: LoginAccountI
     const body = request.body;
 
     try {
-        const account = await findAccountByEmail(body.email);
+        const account = await findAccountByEmailService(body.email);
 
         if (account === undefined) {
             reply.code(500).send({});
@@ -61,7 +62,7 @@ export const loginAccount = async (request: FastifyRequest<{ Body: LoginAccountI
             if (correctPassword) {
                 const { hash, salt, ...rest} = account;
 
-                reply.code(200).send({ success: true, data: { accessToken: server.jwt.sign(rest) }});
+                reply.code(200).send({ success: true, message: 'Logged in successfully. ', data: { accessToken: server.jwt.sign(rest) }});
             }
 
             reply.code(400).send({ message: 'Invalid name or password. ' });

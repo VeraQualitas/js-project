@@ -43,8 +43,8 @@ model accounts {
   accountId Int @id @default(autoincrement())
 
   email String @unique
-  firstname String
-  lastname String
+  firstname String?
+  lastname String?
   phone String?
   description String?
 
@@ -55,8 +55,6 @@ model accounts {
   
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@unique([firstname, lastname])
 }
 
 model stations {
@@ -85,10 +83,10 @@ model stations {
 }
 
 model accounts_stations {
-  account accounts @relation(fields: [accountId], references: [accountId])
+  account accounts @relation(fields: [accountId], references: [accountId], onDelete: Cascade)
   accountId Int
 
-  station stations @relation(fields: [stationId], references: [stationId])
+  station stations @relation(fields: [stationId], references: [stationId], onDelete: Cascade)
   stationId Int
 
   role Roles @default(USER)
@@ -102,7 +100,7 @@ model accounts_stations {
 model vehicles {
   vehicleId Int @id @default(autoincrement())
 
-  station stations @relation(fields: [stationId], references: [stationId])
+  station stations @relation(fields: [stationId], references: [stationId], onDelete: Cascade)
   stationId Int
 
   vehicleName String
@@ -134,13 +132,13 @@ model vehicles {
 }
 
 model vehicles_equipments {
-  station stations @relation(fields: [stationId], references: [stationId])
+  station stations @relation(fields: [stationId], references: [stationId], onDelete: Cascade)
   stationId Int
 
-  vehicle vehicles @relation(fields: [vehicleId], references: [vehicleId])
+  vehicle vehicles @relation(fields: [vehicleId], references: [vehicleId], onDelete: Cascade)
   vehicleId Int
 
-  equipment equipments @relation(fields: [equipmentId], references: [equipmentId])
+  equipment equipments @relation(fields: [equipmentId], references: [equipmentId], onDelete: Cascade)
   equipmentId Int
 
   createdAt DateTime @default(now())
@@ -152,7 +150,7 @@ model vehicles_equipments {
 model equipments {
   equipmentId Int @id @default(autoincrement())
 
-  station stations @relation(fields: [stationId], references: [stationId])
+  station stations @relation(fields: [stationId], references: [stationId], onDelete: Cascade)
   stationId Int
 
   vehicles vehicles_equipments[]
@@ -171,9 +169,9 @@ model equipments {
 }
 
 model firefighters {
-  firefighter_id Int @id @default(autoincrement())
+  firefighterId Int @id @default(autoincrement())
 
-  station stations @relation(fields: [stationId], references: [stationId])
+  station stations @relation(fields: [stationId], references: [stationId], onDelete: Cascade)
   stationId Int
 
   type Types @default(CASUAL)
@@ -212,25 +210,25 @@ model firefighters {
 }
 
 model firefighters_courses {
-  station stations @relation(fields: [stationId], references: [stationId])
+  station stations @relation(fields: [stationId], references: [stationId], onDelete: Cascade)
   stationId Int
 
-  course courses @relation(fields: [courseId], references: [courseId])
+  course courses @relation(fields: [courseId], references: [courseId], onDelete: Cascade)
   courseId Int
 
-  firefighter firefighters @relation(fields: [firefighter_id], references: [firefighter_id])
-  firefighter_id Int
+  firefighter firefighters @relation(fields: [firefighterId], references: [firefighterId], onDelete: Cascade)
+  firefighterId Int
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([stationId, courseId, firefighter_id])
+  @@unique([stationId, courseId, firefighterId])
 }
 
 model courses {
   courseId Int @id @default(autoincrement())
 
-  station stations @relation(fields: [stationId], references: [stationId])
+  station stations @relation(fields: [stationId], references: [stationId], onDelete: Cascade)
   stationId Int
 
   startTime DateTime

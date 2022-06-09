@@ -1,8 +1,9 @@
 -- CreateTable
 CREATE TABLE `accounts` (
     `accountId` INTEGER NOT NULL AUTO_INCREMENT,
-    `firstname` VARCHAR(191) NOT NULL,
-    `lastname` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `firstname` VARCHAR(191) NULL,
+    `lastname` VARCHAR(191) NULL,
     `phone` VARCHAR(191) NULL,
     `description` VARCHAR(191) NULL,
     `hash` VARCHAR(191) NOT NULL,
@@ -10,7 +11,7 @@ CREATE TABLE `accounts` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
-    UNIQUE INDEX `accounts_firstname_lastname_key`(`firstname`, `lastname`),
+    UNIQUE INDEX `accounts_email_key`(`email`),
     PRIMARY KEY (`accountId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -18,6 +19,10 @@ CREATE TABLE `accounts` (
 CREATE TABLE `stations` (
     `stationId` INTEGER NOT NULL AUTO_INCREMENT,
     `stationName` VARCHAR(191) NOT NULL,
+    `country` VARCHAR(191) NOT NULL,
+    `city` VARCHAR(191) NOT NULL,
+    `street` VARCHAR(191) NOT NULL,
+    `postalCode` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
@@ -97,7 +102,7 @@ CREATE TABLE `equipments` (
 
 -- CreateTable
 CREATE TABLE `firefighters` (
-    `firefighter_id` INTEGER NOT NULL AUTO_INCREMENT,
+    `firefighterId` INTEGER NOT NULL AUTO_INCREMENT,
     `stationId` INTEGER NOT NULL,
     `type` ENUM('CASUAL', 'SUPPORTING', 'YOUNG', 'HONORABLE') NOT NULL DEFAULT 'CASUAL',
     `registrationNumber` VARCHAR(191) NULL,
@@ -126,18 +131,18 @@ CREATE TABLE `firefighters` (
     `updatedAt` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `firefighters_stationId_shortname_key`(`stationId`, `shortname`),
-    PRIMARY KEY (`firefighter_id`)
+    PRIMARY KEY (`firefighterId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `firefighters_courses` (
     `stationId` INTEGER NOT NULL,
     `courseId` INTEGER NOT NULL,
-    `firefighter_id` INTEGER NOT NULL,
+    `firefighterId` INTEGER NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
-    UNIQUE INDEX `firefighters_courses_stationId_courseId_firefighter_id_key`(`stationId`, `courseId`, `firefighter_id`)
+    UNIQUE INDEX `firefighters_courses_stationId_courseId_firefighterId_key`(`stationId`, `courseId`, `firefighterId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
@@ -156,37 +161,37 @@ CREATE TABLE `courses` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `accounts_stations` ADD CONSTRAINT `accounts_stations_accountId_fkey` FOREIGN KEY (`accountId`) REFERENCES `accounts`(`accountId`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `accounts_stations` ADD CONSTRAINT `accounts_stations_accountId_fkey` FOREIGN KEY (`accountId`) REFERENCES `accounts`(`accountId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `accounts_stations` ADD CONSTRAINT `accounts_stations_stationId_fkey` FOREIGN KEY (`stationId`) REFERENCES `stations`(`stationId`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `accounts_stations` ADD CONSTRAINT `accounts_stations_stationId_fkey` FOREIGN KEY (`stationId`) REFERENCES `stations`(`stationId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `vehicles` ADD CONSTRAINT `vehicles_stationId_fkey` FOREIGN KEY (`stationId`) REFERENCES `stations`(`stationId`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `vehicles` ADD CONSTRAINT `vehicles_stationId_fkey` FOREIGN KEY (`stationId`) REFERENCES `stations`(`stationId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `vehicles_equipments` ADD CONSTRAINT `vehicles_equipments_stationId_fkey` FOREIGN KEY (`stationId`) REFERENCES `stations`(`stationId`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `vehicles_equipments` ADD CONSTRAINT `vehicles_equipments_stationId_fkey` FOREIGN KEY (`stationId`) REFERENCES `stations`(`stationId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `vehicles_equipments` ADD CONSTRAINT `vehicles_equipments_vehicleId_fkey` FOREIGN KEY (`vehicleId`) REFERENCES `vehicles`(`vehicleId`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `vehicles_equipments` ADD CONSTRAINT `vehicles_equipments_vehicleId_fkey` FOREIGN KEY (`vehicleId`) REFERENCES `vehicles`(`vehicleId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `vehicles_equipments` ADD CONSTRAINT `vehicles_equipments_equipmentId_fkey` FOREIGN KEY (`equipmentId`) REFERENCES `equipments`(`equipmentId`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `vehicles_equipments` ADD CONSTRAINT `vehicles_equipments_equipmentId_fkey` FOREIGN KEY (`equipmentId`) REFERENCES `equipments`(`equipmentId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `equipments` ADD CONSTRAINT `equipments_stationId_fkey` FOREIGN KEY (`stationId`) REFERENCES `stations`(`stationId`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `equipments` ADD CONSTRAINT `equipments_stationId_fkey` FOREIGN KEY (`stationId`) REFERENCES `stations`(`stationId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `firefighters` ADD CONSTRAINT `firefighters_stationId_fkey` FOREIGN KEY (`stationId`) REFERENCES `stations`(`stationId`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `firefighters` ADD CONSTRAINT `firefighters_stationId_fkey` FOREIGN KEY (`stationId`) REFERENCES `stations`(`stationId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `firefighters_courses` ADD CONSTRAINT `firefighters_courses_stationId_fkey` FOREIGN KEY (`stationId`) REFERENCES `stations`(`stationId`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `firefighters_courses` ADD CONSTRAINT `firefighters_courses_stationId_fkey` FOREIGN KEY (`stationId`) REFERENCES `stations`(`stationId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `firefighters_courses` ADD CONSTRAINT `firefighters_courses_firefighter_id_fkey` FOREIGN KEY (`firefighter_id`) REFERENCES `firefighters`(`firefighter_id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `firefighters_courses` ADD CONSTRAINT `firefighters_courses_firefighterId_fkey` FOREIGN KEY (`firefighterId`) REFERENCES `firefighters`(`firefighterId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `firefighters_courses` ADD CONSTRAINT `firefighters_courses_courseId_fkey` FOREIGN KEY (`courseId`) REFERENCES `courses`(`courseId`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `firefighters_courses` ADD CONSTRAINT `firefighters_courses_courseId_fkey` FOREIGN KEY (`courseId`) REFERENCES `courses`(`courseId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `courses` ADD CONSTRAINT `courses_stationId_fkey` FOREIGN KEY (`stationId`) REFERENCES `stations`(`stationId`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `courses` ADD CONSTRAINT `courses_stationId_fkey` FOREIGN KEY (`stationId`) REFERENCES `stations`(`stationId`) ON DELETE CASCADE ON UPDATE CASCADE;

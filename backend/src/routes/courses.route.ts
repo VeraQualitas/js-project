@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 
 import { $ref } from "../schemas/courses.schema";
-import { getCourses, getCourse, addCourse, updateCourse, deleteCourse } from '../controllers/courses.controller';
+import { getCourses, getCourse, getCourseFirefighters, addCourse, updateCourse, updateCourseFirefighter, deleteCourse, deleteCourseFirefighter } from '../controllers/courses.controller';
 import { e400Properties, e500Properties } from "./_error_opts";
 
 const path = '/courses';
@@ -9,13 +9,13 @@ const path = '/courses';
 async function courseRoutes(server: FastifyInstance) {
 
     server.get(
-        'stations/:stationId' + path,
+        '/stations/:stationId' + path,
         {
             preHandler: [server.authorize],
             schema: {
                 params: $ref(''),
                 response: {
-                    201: $ref(''),
+                    200: $ref(''),
                     400: e400Properties,
                     500: e500Properties,
                 }
@@ -31,13 +31,29 @@ async function courseRoutes(server: FastifyInstance) {
             schema: {
                 params: $ref(''),
                 response: {
-                    201: $ref(''),
+                    200: $ref(''),
                     400: e400Properties,
                     500: e500Properties,
                 }
             }
         },
         getCourse
+    );
+
+    server.get(
+        path + '/:courseId/firefighters',
+        {
+            preHandler: [server.authorize],
+            schema: {
+                params: $ref(''),
+                response: {
+                    200: $ref(''),
+                    400: e400Properties,
+                    500: e500Properties,
+                }
+            }
+        },
+        getCourseFirefighters
     );
 
     server.post(
@@ -64,13 +80,29 @@ async function courseRoutes(server: FastifyInstance) {
                 params: $ref(''),
                 body: $ref(''),
                 response: {
-                    201: $ref(''),
+                    204: $ref(''),
                     400: e400Properties,
                     500: e500Properties,
                 }
             }
         },
         updateCourse
+    );
+
+    server.put(
+        path + '/:courseId/firefighters/:firefighterId',
+        {
+            preHandler: [server.authorize],
+            schema: {
+                params: $ref(''),
+                response: {
+                    204: $ref(''),
+                    400: e400Properties,
+                    500: e500Properties,
+                }
+            }
+        },
+        updateCourseFirefighter
     );
 
     server.delete(
@@ -81,13 +113,29 @@ async function courseRoutes(server: FastifyInstance) {
                 params: $ref(''),
                 body: $ref(''),
                 response: {
-                    201: $ref(''),
+                    204: $ref(''),
                     400: e400Properties,
                     500: e500Properties,
                 }
             }
         },
         deleteCourse
+    );
+
+    server.delete(
+        path + '/:courseId/firefighters/:firefighterId',
+        {
+            preHandler: [server.authorize],
+            schema: {
+                params: $ref(''),
+                response: {
+                    204: $ref(''),
+                    400: e400Properties,
+                    500: e500Properties,
+                }
+            }
+        },
+        deleteCourseFirefighter
     );
 };
 

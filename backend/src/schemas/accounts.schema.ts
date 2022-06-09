@@ -40,6 +40,7 @@ const accountParamsSchema = z.object({
 
 const accountResponseSchema = z.object({
     success: z.boolean(),
+    message: z.string(),
     data: z.object({
         account: accountSchema.optional()
     })
@@ -47,6 +48,7 @@ const accountResponseSchema = z.object({
 
 const loginResponseSchema = z.object({
     success: z.boolean(),
+    message: z.string(),
     data: z.object({
         accessToken: z.string()
     })

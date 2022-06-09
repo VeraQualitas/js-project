@@ -10,12 +10,12 @@ import {AuthGuardService, NotAuthGuardService} from "./services/auth-guard.servi
 
 const routes: Routes = [
   {
-    path: 'sign-up',
+    path: 'register',
     component: SignUpComponent,
     canActivate: [NotAuthGuardService]
   },
   {
-    path: 'sign-in',
+    path: 'login',
     component: SignInComponent,
     canActivate: [NotAuthGuardService]
   },

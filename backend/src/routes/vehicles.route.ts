@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 
 import { $ref } from "../schemas/vehicles.schema";
-import { getVehicles, getVehicle, addVehicle, updateVehicle, deleteVehicle } from '../controllers/vehicles.controller';
+import { getStationVehicles, getVehicle, getVehicleEquipments, addVehicle, updateVehicle, deleteVehicle } from '../controllers/vehicles.controller';
 import { e400Properties, e500Properties } from "./_error_opts";
 
 const path = '/vehicles';
@@ -9,19 +9,19 @@ const path = '/vehicles';
 async function vehicleRoutes(server: FastifyInstance) {
 
     server.get(
-        'stations/:stationId' + path,
+        '/stations/:stationId' + path,
         {
             preHandler: [server.authorize],
             schema: {
-                params: $ref(''),
+                params: $ref('stationParamsSchema'),
                 response: {
-                    201: $ref(''),
+                    200: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }
             }
         },
-        getVehicles
+        getStationVehicles
     );
 
     server.get(
@@ -29,9 +29,9 @@ async function vehicleRoutes(server: FastifyInstance) {
         {
             preHandler: [server.authorize],
             schema: {
-                params: $ref(''),
+                params: $ref('vehicleParamsSchema'),
                 response: {
-                    201: $ref(''),
+                    200: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }
@@ -40,14 +40,30 @@ async function vehicleRoutes(server: FastifyInstance) {
         getVehicle
     );
 
+    server.get(
+        path + '/:vehicleId/equipments',
+        {
+            preHandler: [server.authorize],
+            schema: {
+                params: $ref('vehicleParamsSchema'),
+                response: {
+                    200: $ref('responseSchema'),
+                    400: e400Properties,
+                    500: e500Properties,
+                }
+            }
+        },
+        getVehicleEquipments
+    );
+
     server.post(
         path,
         {
             preHandler: [server.authorize],
             schema: {
-                body: $ref(''),
+                body: $ref('addVehicleBody'),
                 response: {
-                    201: $ref(''),
+                    201: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }
@@ -61,10 +77,10 @@ async function vehicleRoutes(server: FastifyInstance) {
         {
             preHandler: [server.authorize],
             schema: {
-                params: $ref(''),
-                body: $ref(''),
+                params: $ref('vehicleParamsSchema'),
+                body: $ref('editVehicleBody'),
                 response: {
-                    201: $ref(''),
+                    204: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }
@@ -78,10 +94,9 @@ async function vehicleRoutes(server: FastifyInstance) {
         {
             preHandler: [server.authorize],
             schema: {
-                params: $ref(''),
-                body: $ref(''),
+                params: $ref('vehicleParamsSchema'),
                 response: {
-                    201: $ref(''),
+                    204: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }

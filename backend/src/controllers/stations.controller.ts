@@ -1,27 +1,148 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 
-import { registerAccountService, findAccountByEmail } from "../services/accounts.service";
-import { RegisterAccountInput, LoginAccountInput } from "../schemas/accounts.schema";
-import { verifyPassword } from "../utils/hash";
-import { server } from "../app";
+import { getStationsService, getStationService, getStationMembersService, getStationMemberService, addStationService, addMemberToStationByEmailService, updateStationService, updateMemberInStationService, deleteStationService, deleteMemberFromStationService } from "../services/stations.service";
+
+interface IGetStationParams {
+    stationId: number;
+}
+
+interface IGetAccountsStationsParams {
+    stationId: number;
+    accountId: number;
+}
+
+interface IAddStationBody {
+
+}
+
+interface IAddMemberToStationBody {
+
+}
+
+interface IUpdateStationBody {
+
+}
+
+interface IUpdateMemberInStationBody {
+
+}
 
 export const getStations = async (request: FastifyRequest, reply: FastifyReply) => {
-    const body = request.body;
-
     try {
-        const account = await registerAccountService(body);
+        const stations = await getStationsService(request.user);
 
-        if (account === undefined) {
+        if (stations === undefined) {
             reply.code(500).send({});
         }
 
-        if (account === null) {
+        if (stations === null) {
             reply.code(400).send({});
         }
 
         const response = {
             success: true,
-            data: {}
+            data: { stations }
+        };
+
+        reply.code(200).send(response);
+
+    } catch (e) {
+        console.error(e);
+        reply.code(500).send({});
+    }
+};
+
+export const getStation = async (request: FastifyRequest<{ Params: IGetStationParams }>, reply: FastifyReply) => {
+    try {
+        const station = await getStationService(request.user, request.params.stationId);
+
+        if (station === undefined) {
+            reply.code(500).send({});
+        }
+
+        if (station === null) {
+            reply.code(400).send({});
+        }
+
+        const response = {
+            success: true,
+            data: { station }
+        };
+
+        reply.code(200).send(response);
+
+    } catch (e) {
+        console.error(e);
+        reply.code(500).send({});
+    }
+};
+
+export const getStationMembers = async (request: FastifyRequest<{ Params: IGetStationParams }>, reply: FastifyReply) => {
+    try {
+        const members = await getStationMembersService(request.user, request.params.stationId);
+
+        if (members === undefined) {
+            reply.code(500).send({});
+        }
+
+        if (members === null) {
+            reply.code(400).send({});
+        }
+
+        const response = {
+            success: true,
+            data: { members }
+        };
+
+        reply.code(200).send(response);
+
+    } catch (e) {
+        console.error(e);
+        reply.code(500).send({});
+    }
+};
+
+export const getStationMember = async (request: FastifyRequest<{ Params: IGetAccountsStationsParams }>, reply: FastifyReply) => {
+    try {
+        const member = await getStationMemberService(request.user, request.params.stationId, request.params.accountId);
+
+        if (member === undefined) {
+            reply.code(500).send({});
+        }
+
+        if (member === null) {
+            reply.code(400).send({});
+        }
+
+        const response = {
+            success: true,
+            data: { member }
+        };
+
+        reply.code(200).send(response);
+
+    } catch (e) {
+        console.error(e);
+        reply.code(500).send({});
+    }
+};
+
+export const addStation = async (request: FastifyRequest<{ Body: IAddStationBody }>, reply: FastifyReply) => {
+    try {
+        const station = await addStationService(request.user, request.body);
+
+        if (station === undefined) {
+            reply.code(500).send({});
+        }
+
+        if (station === null) {
+            reply.code(400).send({});
+        }
+
+        const response = {
+            success: true,
+            message: 'Added successfully. ',
+            data: { station }
         };
 
         reply.code(201).send(response);
@@ -32,26 +153,26 @@ export const getStations = async (request: FastifyRequest, reply: FastifyReply) 
     }
 };
 
-export const getStation = async (request: FastifyRequest, reply: FastifyReply) => {
-    const body = request.body;
+export const addMemberToStationByEmail = async (request: FastifyRequest<{ Body: IAddMemberToStationBody, Params: IGetStationParams }>, reply: FastifyReply) => {
 
     try {
-        const account = await registerAccountService(body);
+        const member = await addMemberToStationByEmailService(request.user, request.body, request.params.stationId);
 
-        if (account === undefined) {
+        if (member === undefined) {
             reply.code(500).send({});
         }
 
-        if (account === null) {
+        if (member === null) {
             reply.code(400).send({});
         }
 
         const response = {
             success: true,
+            message: 'Added successfully. ',
             data: {}
         };
 
-        reply.code(201).send(response);
+        reply.code(204).send(response);
 
     } catch (e) {
         console.error(e);
@@ -59,26 +180,25 @@ export const getStation = async (request: FastifyRequest, reply: FastifyReply) =
     }
 };
 
-export const addStation = async (request: FastifyRequest, reply: FastifyReply) => {
-    const body = request.body;
-
+export const updateStation = async (request: FastifyRequest<{ Body: IUpdateStationBody, Params: IGetStationParams }>, reply: FastifyReply) => {
     try {
-        const account = await registerAccountService(body);
+        const station = await updateStationService(request.user, request.body, request.params.stationId);
 
-        if (account === undefined) {
+        if (station === undefined) {
             reply.code(500).send({});
         }
 
-        if (account === null) {
+        if (station === null) {
             reply.code(400).send({});
         }
 
         const response = {
             success: true,
-            data: {}
+            message: 'Updated successfully. ',
+            data: { station }
         };
 
-        reply.code(201).send(response);
+        reply.code(204).send(response);
 
     } catch (e) {
         console.error(e);
@@ -86,26 +206,25 @@ export const addStation = async (request: FastifyRequest, reply: FastifyReply) =
     }
 };
 
-export const updateStation = async (request: FastifyRequest, reply: FastifyReply) => {
-    const body = request.body;
-
+export const updateMemberInStation = async (request: FastifyRequest<{ Body: IUpdateMemberInStationBody, Params: IGetAccountsStationsParams }>, reply: FastifyReply) => {
     try {
-        const account = await registerAccountService(body);
+        const member = await updateMemberInStationService(request.user, request.body, request.params.stationId, request.params.accountId);
 
-        if (account === undefined) {
+        if (member === undefined) {
             reply.code(500).send({});
         }
 
-        if (account === null) {
+        if (member === null) {
             reply.code(400).send({});
         }
 
         const response = {
             success: true,
+            message: 'Updated successfully. ',
             data: {}
         };
 
-        reply.code(201).send(response);
+        reply.code(204).send(response);
 
     } catch (e) {
         console.error(e);
@@ -113,26 +232,52 @@ export const updateStation = async (request: FastifyRequest, reply: FastifyReply
     }
 };
 
-export const deleteStation = async (request: FastifyRequest, reply: FastifyReply) => {
-    const body = request.body;
-
+export const deleteStation = async (request: FastifyRequest<{ Params: IGetStationParams }>, reply: FastifyReply) => {
     try {
-        const account = await registerAccountService(body);
+        const station = await deleteStationService(request.user, request.params.stationId);
 
-        if (account === undefined) {
+        if (station === undefined) {
             reply.code(500).send({});
         }
 
-        if (account === null) {
+        if (station === null) {
             reply.code(400).send({});
         }
 
         const response = {
             success: true,
+            message: 'Deleted successfully. ',
             data: {}
         };
 
-        reply.code(201).send(response);
+        reply.code(204).send(response);
+
+    } catch (e) {
+        console.error(e);
+        reply.code(500).send({});
+    }
+};
+
+export const deleteMemberFromStation = async (request: FastifyRequest<{ Params: IGetAccountsStationsParams }>, reply: FastifyReply) => {
+    try {
+        const member = await deleteMemberFromStationService(request.user, request.params.stationId, request.params.accountId);
+
+        if (member === undefined) {
+            reply.code(500).send({});
+        }
+
+        if (member === null) {
+            reply.code(400).send({});
+        }
+
+        const response = {
+            success: true,
+            message: 'Deleted successfully. ',
+            data: {}
+        };
+        console.log(response)
+
+        reply.code(204).send(response);
 
     } catch (e) {
         console.error(e);

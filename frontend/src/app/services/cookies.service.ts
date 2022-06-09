@@ -16,29 +16,24 @@ export class CookiesService {
 
   backend = config.backend;
 
-  public get_session_data(): any {
-    let session = ({
-      session_id: 0,
-      token: '0',
-      account_id: 0
-    });
-    if (this.cookieService.check('session_id')) {
-      session.session_id = Number((this.cookieService.get('session_id')));
-      session.token = this.cookieService.get('token');
-      session.account_id = Number(this.cookieService.get('account_id'));
+  public get_session(): any {
+    let token = '0';
+
+    if (this.cookieService.check('token')) {
+      token = this.cookieService.get('token');
     } else {
-      this.cookieService.set('session_id', '0', {path: '/'});
       this.cookieService.set('token', '0', {path: '/'});
-      this.cookieService.set('account_id', '0', {path: '/'});
     }
-    return session;
+    return token;
   }
 
-  public clear_session_data(): void {
-    this.cookieService.delete('session_id');
+  public clear_session(): void {
     this.cookieService.delete('token');
-    this.cookieService.delete('account_id');
-    this.get_session_data();
+    this.get_session();
+  }
+
+  public set_session(token: string) {
+    this.cookieService.set('token', token, {path: '/'});
   }
 
 

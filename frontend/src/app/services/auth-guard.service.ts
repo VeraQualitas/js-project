@@ -12,13 +12,13 @@ export class AuthGuardService implements CanActivate {
               private router: Router) {
   }
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    const session = this.cookies.get_session_data();
-    if (session.account_id === 0) {
-      this.router.navigate(['sign-in'], {queryParams: {returnUrl: state.url}});
+    const token = this.cookies.get_session();
+    if (token === '0') {
+      this.router.navigate(['login'], {queryParams: {returnUrl: state.url}});
       return of(false);
     }
-    return this.http.is_authenticated(session).pipe(map((response: any) => {
-      if (response.is_authenticated) {
+    return this.http.authenticate(token).pipe(map((response: any) => {
+      if (response?.success) {
         return true;
       }
       else {
@@ -39,12 +39,12 @@ export class NotAuthGuardService implements CanActivate {
               private router: Router) {
   }
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    const session = this.cookies.get_session_data();
-    if (session.account_id === 0) {
+    const token = this.cookies.get_session();
+    if (token === '0') {
       return of(true);
     }
-    return this.http.is_authenticated(session).pipe(map((response: any) => {
-      if (response.is_authenticated) {
+    return this.http.authenticate(token).pipe(map((response: any) => {
+      if (response?.success) {
         this.router.navigate(['not-signed-out'], {queryParams: {returnUrl: state.url}});
         return false;
       }
@@ -52,8 +52,7 @@ export class NotAuthGuardService implements CanActivate {
         return true;
       }
     }), catchError((error) => {
-      this.router.navigate(['something-went-wrong']);
-      return of(false);
+      return of(true);
     }));
   }
 }

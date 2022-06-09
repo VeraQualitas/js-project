@@ -38,12 +38,12 @@ async function accountRoutes(server: FastifyInstance) {
         loginAccount
     );
 
-    server.post(
+    server.get(
         path + '/authenticate',
         {
             preHandler: [server.authorize],
             schema: {
-                body: $ref('authenticateAccountSchema'),
+                // body: $ref('authenticateAccountSchema'),
                 response: {
                     200: $ref('authenticateResponseSchema'),
                     400: e400Properties,

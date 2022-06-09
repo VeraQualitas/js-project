@@ -2,17 +2,26 @@ import Fastify, { FastifyReply, FastifyRequest } from 'fastify';
 import fjwt, { JWT } from 'fastify-jwt';
 import dotenv from 'dotenv';
 import swagger from 'fastify-swagger';
+import cors from '@fastify/cors';
 import { withRefResolver } from 'fastify-zod';
 import { version } from '../package.json';
 
 import accountRoutes from './routes/accounts.route';
+import stationRoutes from './routes/stations.route';
+import vehicleRoutes from './routes/vehicles.route';
+import equipmentRoutes from './routes/equipments.route';
+import firefighterRoutes from './routes/firefighters.route';
 
 import { accountSchemas } from './schemas/accounts.schema';
+import { stationSchemas } from './schemas/stations.schema';
+import { vehicleSchemas } from './schemas/vehicles.schema';
+import { equipmentSchemas } from './schemas/equipments.schema';
+import { firefighterSchemas } from './schemas/firefighters.schema';
 
 dotenv.config({ path: '../.env' });
 
 const PORT = process.env.PORT || 5000;
-const HOST = process.env.HOS || '0.0.0.0';
+const HOST = process.env.HOST || '0.0.0.0';
 
 declare module "fastify" {
     interface FastifyRequest {
@@ -26,8 +35,11 @@ declare module "fastify" {
 
 declare module "fastify-jwt" {
     interface FastifyJWT {
-        account: {
-            account_id: string;
+        user: {
+            accountId: number;
+            email: string;
+            firstname: string | undefined;
+            lastname: string | undefined;
         };
     }
 }
@@ -62,11 +74,12 @@ export const server = Fastify({
 
 async function main() {
 
-    for (const schema of [...accountSchemas]) {
+    for (const schema of [...accountSchemas, ...stationSchemas, ...vehicleSchemas, ...equipmentSchemas, ...firefighterSchemas]) {
         server.addSchema(schema);
     }
 
     server.register(fjwt, { secret: 'fdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsdfsfdfdsfdsf' });
+    server.register(cors, { origin: true, preflightContinue: true });
 
     server.decorate('authenticate', async (request: FastifyRequest, reply: FastifyReply) => {
         try {
@@ -110,6 +123,10 @@ async function main() {
     });
 
     server.register(accountRoutes);
+    server.register(stationRoutes);
+    server.register(vehicleRoutes);
+    server.register(equipmentRoutes);
+    server.register(firefighterRoutes);
 
     try {
         const listener = await server.listen(PORT, HOST);

@@ -15,7 +15,7 @@ export async function registerAccountService(input: RegisterAccountInput) {
 
 
         return await prisma.accounts.create({
-            data: { ...rest, salt, hash: hash }
+            data: { ...rest, salt, hash }
         });
     } catch (e) {
         console.error(e);
@@ -23,7 +23,7 @@ export async function registerAccountService(input: RegisterAccountInput) {
     }
 };
 
-export async function findAccountByEmail(email: string) {
+export async function findAccountByEmailService(email: string) {
     try {
         return await prisma.accounts.findUnique({
             where: { email }

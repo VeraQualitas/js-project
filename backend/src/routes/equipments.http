@@ -1,0 +1,101 @@
+@email = "123@123.123"
+@password = "123"
+@firstname = "123"
+@lastname = "123"
+
+### LOGIN
+# @name login
+POST http://localhost:5000/accounts/login HTTP/2.1
+Content-Type: application/json
+
+{
+    "email": {{email}},
+    "password": {{password}}
+}
+
+###
+
+@access_token = {{login.response.body.$.data.$.accessToken}}
+
+### AUTHENTICATE USER
+GET  http://localhost:5000/accounts/authenticate HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+### GET STATIONS
+GET  http://localhost:5000/stations HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### GET STATION EQUIPMENTS
+GET  http://localhost:5000/stations/2/equipments HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### GET VEHICLE
+GET  http://localhost:5000/vehicles/2 HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### GET EQUIPMENT VEHICLES
+GET  http://localhost:5000/equipments/2/vehicles HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+### ADD EQUIPMENT
+POST http://localhost:5000/equipments HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "stationId": 2,
+    "type": "f76f76f",
+    "trademark": "f67f67",
+    "productionDate": "2020-03-19T14:21:00+0200",
+    "fuelType": "GASOLINE",
+    "technicalExamination": "2020-03-19T14:21:00+0200",
+    "CNBOP": "567r77r7f7f6f",
+    "additionalInfo": "tfyfyf"
+}
+
+###
+
+### UPDATE EQUIPMENT
+PUT http://localhost:5000/equipments/1 HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "type": "1234",
+    "trademark": "f67f67",
+    "productionDate": "2020-03-19T14:21:00+0200",
+    "fuelType": "GASOLINE",
+    "technicalExamination": "2020-03-19T14:21:00+0200",
+    "CNBOP": "567r77r7f7f6f",
+    "additionalInfo": "tfyfyf"
+}
+
+### UPDATE VEHICLE EQUIPMENT
+PUT http://localhost:5000/equipments/2/vehicles/2 HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{}
+
+###
+
+### DELETE EQUIPMENT
+DELETE http://localhost:5000/equipments/1 HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### DELETE VEHICLE EQUIPMENT
+DELETE http://localhost:5000/equipments/2/vehicles/2 HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###

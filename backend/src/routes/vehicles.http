@@ -1,0 +1,109 @@
+@email = "123@123.123"
+@password = "123"
+@firstname = "123"
+@lastname = "123"
+
+### LOGIN
+# @name login
+POST http://localhost:5000/accounts/login HTTP/2.1
+Content-Type: application/json
+
+{
+    "email": {{email}},
+    "password": {{password}}
+}
+
+###
+
+@access_token = {{login.response.body.$.data.$.accessToken}}
+
+### AUTHENTICATE USER
+GET  http://localhost:5000/accounts/authenticate HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+### GET STATIONS
+GET  http://localhost:5000/stations HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### GET STATION VEHICLES
+GET  http://localhost:5000/stations/2/vehicles HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### GET VEHICLE
+GET  http://localhost:5000/vehicles/2 HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### GET VEHICLE EQUIPMENTS
+GET  http://localhost:5000/vehicles/2/equipments HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+### ADD VEHICLE
+POST http://localhost:5000/vehicles HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "stationId": 2,
+    "vehicleName": "76f7f",
+    "registration": "f76f76f",
+    "producer": "f67f67",
+    "trademark": "f76f7f",
+    "type": "f76f7f7",
+    "productionDate": "2020-03-19T14:21:00+0200",
+    "VIN": "567r77r7f7f6f",
+    "operationalNumber": "tfyfyf",
+    "fuelType": "AVGAS",
+    "fuelCapacity": 1.3,
+    "waterCapacity": 1.2,
+    "nextInspectionDate": "2020-03-19T14:21:00+0200",
+    "CNBOP": "dsdd",
+    "nextInsuranceTerm": "2020-03-19T14:21:00+0200",
+    "policyNumber": "765",
+    "additionalInfo": "cfgcg",
+    "comments": "cgfc"
+}
+
+###
+
+### UPDATE VEHICLE
+PUT http://localhost:5000/vehicles/2 HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "vehicleName": "76f7ffffff",
+    "registration": "f76f76f",
+    "producer": "f67f67",
+    "trademark": "f76f7f",
+    "type": "f76f7f7",
+    "productionDate": "2020-03-19T14:21:00+0200",
+    "VIN": "567r77r7f7f6f",
+    "operationalNumber": "tfyfyf",
+    "fuelType": "AVGAS",
+    "fuelCapacity": 1.3,
+    "waterCapacity": 1.2,
+    "nextInspectionDate": "2020-03-19T14:21:00+0200",
+    "CNBOP": "dsdd",
+    "nextInsuranceTerm": "2020-03-19T14:21:00+0200",
+    "policyNumber": "765",
+    "additionalInfo": "cfgcg",
+    "comments": "cgfc"
+}
+
+###
+
+### DELETE VEHICLE
+DELETE http://localhost:5000/vehicles/1 HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###

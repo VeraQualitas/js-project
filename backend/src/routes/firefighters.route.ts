@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 
 import { $ref } from "../schemas/firefighters.schema";
-import { getFirefighters, getFirefighter, addFirefighter, updateFirefighter, deleteFirefighter } from '../controllers/firefighters.controller';
+import { getStationFirefighters, getFirefighter, getFirefighterCourses, addFirefighter, updateFirefighter, deleteFirefighter } from '../controllers/firefighters.controller';
 import { e400Properties, e500Properties } from "./_error_opts";
 
 const path = '/firefighters';
@@ -9,19 +9,19 @@ const path = '/firefighters';
 async function firefighterRoutes(server: FastifyInstance) {
 
     server.get(
-        'stations/:stationId' + path,
+        '/stations/:stationId' + path,
         {
             preHandler: [server.authorize],
             schema: {
-                params: $ref(''),
+                params: $ref('stationParamsSchema'),
                 response: {
-                    201: $ref(''),
+                    200: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }
             }
         },
-        getFirefighters
+        getStationFirefighters
     );
 
     server.get(
@@ -29,9 +29,9 @@ async function firefighterRoutes(server: FastifyInstance) {
         {
             preHandler: [server.authorize],
             schema: {
-                params: $ref(''),
+                params: $ref('firefighterParamsSchema'),
                 response: {
-                    201: $ref(''),
+                    200: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }
@@ -40,14 +40,30 @@ async function firefighterRoutes(server: FastifyInstance) {
         getFirefighter
     );
 
+    server.get(
+        path + '/:firefighterId/courses',
+        {
+            preHandler: [server.authorize],
+            schema: {
+                params: $ref('firefighterParamsSchema'),
+                response: {
+                    200: $ref('responseSchema'),
+                    400: e400Properties,
+                    500: e500Properties,
+                }
+            }
+        },
+        getFirefighterCourses
+    );
+
     server.post(
         path,
         {
             preHandler: [server.authorize],
             schema: {
-                body: $ref(''),
+                body: $ref('addFirefighterBody'),
                 response: {
-                    201: $ref(''),
+                    201: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }
@@ -61,10 +77,10 @@ async function firefighterRoutes(server: FastifyInstance) {
         {
             preHandler: [server.authorize],
             schema: {
-                params: $ref(''),
-                body: $ref(''),
+                params: $ref('firefighterParamsSchema'),
+                body: $ref('editFirefighterBody'),
                 response: {
-                    201: $ref(''),
+                    204: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }
@@ -78,10 +94,9 @@ async function firefighterRoutes(server: FastifyInstance) {
         {
             preHandler: [server.authorize],
             schema: {
-                params: $ref(''),
-                body: $ref(''),
+                params: $ref('firefighterParamsSchema'),
                 response: {
-                    201: $ref(''),
+                    204: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }

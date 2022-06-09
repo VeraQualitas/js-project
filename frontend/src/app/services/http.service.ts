@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import config from '../../../../frontend_config.json';
 
@@ -10,25 +10,29 @@ import config from '../../../../frontend_config.json';
 })
 export class HttpService {
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
+
   backend = config.backend;
 
-
-  sign_up(auth: any): Observable<any> {
-    return this.http.post<any>(this.backend + '/sign-up', auth);
+  register(credentials: any): Observable<any> {
+    return this.http.post<any>(this.backend + '/accounts/register', credentials);
   }
 
-  sign_in(auth: any): Observable<any> {
-    return this.http.post<any>(this.backend + '/sign-in', auth);
+  login(credentials: any): Observable<any> {
+    return this.http.post<any>(this.backend + '/accounts/login', credentials);
   }
 
-  public is_authenticated(auth: any): any {
-    return this.http.post(this.backend + '/is-authenticated', auth);
- }
-
- sign_out(auth: any): Observable<any> {
-    return this.http.post<any>(this.backend + '/sign-out', auth);
+  authenticate(token: string): Observable<any> {
+    return this.http.get<any>(
+      this.backend + '/accounts/authenticate',
+      {
+        headers:
+          new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          })
+      }
+    );
   }
 
 }

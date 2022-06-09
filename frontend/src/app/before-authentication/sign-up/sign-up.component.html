@@ -6,7 +6,7 @@
     <div class="inputs-container">
       <mat-form-field class="width-input" appearance="standard">
         <mat-label>Adres email</mat-label>
-        <input type="email" matInput [(ngModel)]="email" placeholder="np. sth@example.com">
+        <input type="email" matInput [(ngModel)]="account.email" placeholder="np. sth@example.com">
         <mat-error *ngIf="false">
           Nieprawidłowy format
         </mat-error>
@@ -17,7 +17,7 @@
 
       <mat-form-field class="width-input" appearance="standard">
         <mat-label>Hasło</mat-label>
-        <input type="email" matInput [(ngModel)]="password" placeholder="Ex. pat@example.com">
+        <input type="email" matInput [(ngModel)]="account.password" placeholder="Ex. pat@example.com">
         <mat-error *ngIf="false">
           Nieprawidłowy format
         </mat-error>
@@ -28,7 +28,7 @@
 
       <mat-form-field class="width-input" appearance="standard">
         <mat-label>Potwierdź hasło</mat-label>
-        <input type="email" matInput [(ngModel)]="confirm_password" placeholder="Ex. pat@example.com">
+        <input type="email" matInput [(ngModel)]="account.confirmPassword" placeholder="Ex. pat@example.com">
         <mat-error *ngIf="false">
           Nieprawidłowy format
         </mat-error>
@@ -39,7 +39,7 @@
 
       <mat-form-field class="width-input" appearance="standard">
         <mat-label>Imię</mat-label>
-        <input type="email" matInput [(ngModel)]="firstname" placeholder="Ex. pat@example.com">
+        <input type="email" matInput [(ngModel)]="account.firstname" placeholder="Ex. pat@example.com">
         <mat-error *ngIf="false">
           Nieprawidłowy format
         </mat-error>
@@ -50,7 +50,7 @@
 
       <mat-form-field class="width-input" appearance="standard">
       <mat-label>Nazwisko</mat-label>
-      <input type="email" matInput [(ngModel)]="lastname" placeholder="Ex. pat@example.com">
+      <input type="email" matInput [(ngModel)]="account.lastname" placeholder="Ex. pat@example.com">
       <mat-error *ngIf="false">
         Nieprawidłowy format
       </mat-error>
@@ -61,7 +61,7 @@
 
       <mat-form-field class="width-input" appearance="standard">
       <mat-label>Telefon</mat-label>
-      <input type="email" matInput [(ngModel)]="phone" placeholder="Ex. pat@example.com">
+      <input type="email" matInput [(ngModel)]="account.phone" placeholder="Ex. pat@example.com">
       <mat-error *ngIf="false">
         Nieprawidłowy format
       </mat-error>
@@ -72,8 +72,8 @@
     </div>
 
     <div style="display: flex; gap: 16px; margin-top: 32px;">
-      <button routerLink="/sign-in" mat-stroked-button color="primary">Wróć do logowania</button>
-      <button (click)="sign_up();" mat-stroked-button color="accent">Zarejestruj się</button>
+      <button routerLink="/login" mat-stroked-button color="primary">Wróć do logowania</button>
+      <button (click)="register();" mat-stroked-button color="accent">Zarejestruj się</button>
     </div>
 
   </div>

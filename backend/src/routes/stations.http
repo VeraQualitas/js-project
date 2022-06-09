@@ -1,0 +1,111 @@
+@email = "123@123.123"
+@password = "123"
+@firstname = "123"
+@lastname = "123"
+
+### LOGIN
+# @name login
+POST http://localhost:5000/accounts/login HTTP/2.1
+Content-Type: application/json
+
+{
+    "email": {{email}},
+    "password": {{password}}
+}
+
+###
+
+@access_token = {{login.response.body.$.data.$.accessToken}}
+
+### AUTHENTICATE USER
+GET  http://localhost:5000/accounts/authenticate HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+### GET STATIONS
+GET  http://localhost:5000/stations HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### GET STATION
+GET  http://localhost:5000/stations/1 HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### GET STATION MEMBERS
+GET  http://localhost:5000/stations/1/members HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### GET STATION MEMBER
+GET  http://localhost:5000/stations/1/members/2 HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+
+
+### ADD STATION
+POST http://localhost:5000/stations HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "stationName": "12345",
+    "country": "12345",
+    "city": "12345",
+    "street": "12345",
+    "postalCode": "12345",
+    "description": "12345"
+}
+
+### ADD MEMBER TO STATION BY EMAIL
+POST http://localhost:5000/stations/1/members HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "email": "12@123.123",
+    "role": "USER"
+}
+
+###
+
+
+
+### UPDATE STATION
+PUT http://localhost:5000/stations/1 HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "stationName": "123456"
+}
+
+### UPDATE MEMBER IN STATION
+PUT http://localhost:5000/stations/1/members/3 HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "role": "ADMIN"
+}
+
+###
+
+
+
+### DELETE STATION
+DELETE http://localhost:5000/stations/1 HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+
+
+### DELETE MEMBER FROM STATION
+DELETE http://localhost:5000/stations/1/members/1 HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}

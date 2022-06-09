@@ -6,7 +6,7 @@
     <div class="inputs-container">
       <mat-form-field class="width-input" appearance="standard">
         <mat-label>Adres email</mat-label>
-        <input type="email" matInput [(ngModel)]="email" placeholder="np. sth@example.com">
+        <input type="email" matInput [(ngModel)]="account.email" placeholder="np. sth@example.com">
         <mat-error *ngIf="false">
           Nieprawidłowy format
         </mat-error>
@@ -17,7 +17,7 @@
 
       <mat-form-field class="width-input" appearance="standard">
         <mat-label>Hasło</mat-label>
-        <input type="email" matInput [(ngModel)]="password" placeholder="Ex. pat@example.com">
+        <input type="email" matInput [(ngModel)]="account.password" placeholder="Ex. pat@example.com">
         <mat-error *ngIf="false">
           Nieprawidłowy format
         </mat-error>
@@ -27,8 +27,8 @@
       </mat-form-field>
 
       <div style="display: flex; gap: 16px; margin-top: 32px;">
-        <button routerLink="/sign-up" mat-stroked-button color="primary">Przejdź do rejestracji</button>
-        <button (click)="sign_in()" mat-stroked-button color="accent">Zaloguj się</button>
+        <button routerLink="/register" mat-stroked-button color="primary">Przejdź do rejestracji</button>
+        <button (click)="login()" mat-stroked-button color="accent">Zaloguj się</button>
       </div>
 
     </div>
