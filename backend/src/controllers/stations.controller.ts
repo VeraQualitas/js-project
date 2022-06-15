@@ -172,7 +172,7 @@ export const addMemberToStationByEmail = async (request: FastifyRequest<{ Body: 
             data: {}
         };
 
-        reply.code(204).send(response);
+        reply.code(201).send(response);
 
     } catch (e) {
         console.error(e);
@@ -198,7 +198,7 @@ export const updateStation = async (request: FastifyRequest<{ Body: IUpdateStati
             data: { station }
         };
 
-        reply.code(204).send(response);
+        reply.code(201).send(response);
 
     } catch (e) {
         console.error(e);
@@ -224,7 +224,7 @@ export const updateMemberInStation = async (request: FastifyRequest<{ Body: IUpd
             data: {}
         };
 
-        reply.code(204).send(response);
+        reply.code(201).send(response);
 
     } catch (e) {
         console.error(e);
@@ -250,7 +250,7 @@ export const deleteStation = async (request: FastifyRequest<{ Params: IGetStatio
             data: {}
         };
 
-        reply.code(204).send(response);
+        reply.code(201).send(response);
 
     } catch (e) {
         console.error(e);
@@ -277,7 +277,7 @@ export const deleteMemberFromStation = async (request: FastifyRequest<{ Params: 
         };
         console.log(response)
 
-        reply.code(204).send(response);
+        reply.code(201).send(response);
 
     } catch (e) {
         console.error(e);

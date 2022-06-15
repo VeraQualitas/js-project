@@ -80,7 +80,7 @@ async function courseRoutes(server: FastifyInstance) {
                 params: $ref(''),
                 body: $ref(''),
                 response: {
-                    204: $ref(''),
+                    201: $ref(''),
                     400: e400Properties,
                     500: e500Properties,
                 }
@@ -96,7 +96,7 @@ async function courseRoutes(server: FastifyInstance) {
             schema: {
                 params: $ref(''),
                 response: {
-                    204: $ref(''),
+                    201: $ref(''),
                     400: e400Properties,
                     500: e500Properties,
                 }
@@ -113,7 +113,7 @@ async function courseRoutes(server: FastifyInstance) {
                 params: $ref(''),
                 body: $ref(''),
                 response: {
-                    204: $ref(''),
+                    201: $ref(''),
                     400: e400Properties,
                     500: e500Properties,
                 }
@@ -129,7 +129,7 @@ async function courseRoutes(server: FastifyInstance) {
             schema: {
                 params: $ref(''),
                 response: {
-                    204: $ref(''),
+                    201: $ref(''),
                     400: e400Properties,
                     500: e500Properties,
                 }

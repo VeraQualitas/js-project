@@ -1,0 +1,83 @@
+<div class="margin">
+    <button mat-stroked-button routerLink="/vehicles" color="{{'warn'}}">{{'Zarządzaj pojazdami'}}</button>
+    <button mat-stroked-button routerLink="/courses" color="{{'warn'}}">{{'Zarządzaj kursami'}}</button>
+    <button mat-stroked-button routerLink="/firemen" color="{{'warn'}}">{{'Zarządzaj strażakami'}}</button>
+    <button mat-stroked-button routerLink="/equipments" color="{{'warn'}}">{{'Zarządzaj wyposażeniem'}}</button>
+    <button mat-stroked-button routerLink="/members" color="{{'warn'}}">{{'Zarządzaj użytkownikami'}}</button>
+</div>
+
+<div class="margin">
+    <mat-form-field appearance="standard">
+        <mat-label>Wybrana jednostka</mat-label>
+        <mat-select [(ngModel)]="currentStation">
+            <mat-option (click)="station = deepcopy(currentStation)" *ngFor="let fireStation of fireStations"
+                [value]="fireStation">
+                {{fireStation.stationName}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <button (click)="showAdding = false; showEditting = false; delete(currentStation.stationId)" mat-stroked-button
+        color="{{'warn'}}">{{'Usuń jednostkę'}}</button>
+
+    <button (click)="showEditting = !showEditting; showAdding = false; station = deepcopy(currentStation)"
+        mat-stroked-button color="{{showEditting ? 'accent' : 'primary'}}">{{showEditting ? 'Anuluj edytowanie' :
+        'Edytuj jednostkę'}}</button>
+
+    <button (click)="showAdding = !showAdding; showEditting = false; clear()" mat-stroked-button
+        color="{{showAdding ? 'accent' : 'primary'}}">{{showAdding ? 'Anuluj dodawanie' : 'Dodaj jednostkę'}}</button>
+
+    <div *ngIf="showAdding">
+        <div style="display: flex; justify-content: center; margin-top: 10vh">
+            <div class="container">
+                <h2>Dodawanie jednostki straży pożarnej</h2>
+                <div *ngFor="let field of stationFields" class="inputs-container">
+                    <mat-form-field class="width-input" appearance="standard">
+                        <mat-label>{{stationFieldsTranslate[field]}}</mat-label>
+                        <input type="email" matInput [(ngModel)]="station[field]" placeholder="">
+                        <mat-error *ngIf="false">
+                            Nieprawidłowy format
+                        </mat-error>
+                        <mat-error *ngIf="false">
+                            Adres email jest <strong>wymagany</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div style="display: flex; gap: 16px; margin-top: 32px;">
+                    <button (click)="showAdding = false" mat-stroked-button color="primary">Anuluj</button>
+                    <button (click)="add()" mat-stroked-button color="accent">Zapisz</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="showEditting">
+        <div style="display: flex; justify-content: center; margin-top: 10vh">
+            <div class="container">
+                <h2>Edytowanie jednostki straży pożarnej - {{currentStation.stationName}}</h2>
+                <div *ngFor="let field of stationFields" class="inputs-container">
+                    <mat-form-field class="width-input" appearance="standard">
+                        <mat-label>{{stationFieldsTranslate[field]}}</mat-label>
+                        <input type="email" matInput [(ngModel)]="station[field]" placeholder="">
+                        <mat-error *ngIf="false">
+                            Nieprawidłowy format
+                        </mat-error>
+                        <mat-error *ngIf="false">
+                            Adres email jest <strong>wymagany</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div style="display: flex; gap: 16px; margin-top: 32px;">
+                    <button (click)="showEditting=false" mat-stroked-button color="primary">Anuluj</button>
+                    <button (click)="edit()" mat-stroked-button color="accent">Zapisz</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!showAdding && !showEditting && fireStations.length > 0">
+        <div *ngFor="let field of stationFields">
+            {{stationFieldsTranslate[field]}}: <b>{{currentStation[field]}}</b>
+        </div>
+    </div>
+</div>

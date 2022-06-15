@@ -37,9 +37,9 @@ declare module "fastify-jwt" {
     interface FastifyJWT {
         user: {
             accountId: number;
-            email: string;
-            firstname: string | undefined;
-            lastname: string | undefined;
+            // email: string;
+            // firstname: string | undefined;
+            // lastname: string | undefined;
         };
     }
 }

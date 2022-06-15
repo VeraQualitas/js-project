@@ -137,7 +137,7 @@ export const updateFirefighter = async (request: FastifyRequest<{ Body: IUpdateF
             data: { firefighter }
         };
 
-        reply.code(204).send(response);
+        reply.code(201).send(response);
 
     } catch (e) {
         console.error(e);
@@ -163,7 +163,7 @@ export const deleteFirefighter = async (request: FastifyRequest<{ Params: IGetFi
             data: {}
         };
 
-        reply.code(204).send(response);
+        reply.code(201).send(response);
 
     } catch (e) {
         console.error(e);

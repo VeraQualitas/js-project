@@ -27,12 +27,13 @@
 
 <div *ngIf="email === ''" class="example-container" [class.is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="toolbar">
-    <div style="display: flex; flex-direction: row; align-items: center">
-      <div style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer" routerLink="/"><mat-icon>local_fire_department</mat-icon></div>
+    <div style="display: flex; flex-direction: row; align-items: center; cursor: pointer" routerLink="/">
+      <div style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;"><mat-icon>local_fire_department</mat-icon></div>
       <h1 class="example-app-name">{{title}}</h1>
     </div>
     <div>
       <button mat-icon-button (click)="change_mode()"><mat-icon>{{current_mode === light ? 'light_mode' : 'dark_mode'}}</mat-icon></button>
+      <button mat-icon-button (click)="sign_out()"><mat-icon>{{'exit_to_app'}}</mat-icon></button>
     </div>
   </mat-toolbar>
 

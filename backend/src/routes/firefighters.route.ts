@@ -80,7 +80,7 @@ async function firefighterRoutes(server: FastifyInstance) {
                 params: $ref('firefighterParamsSchema'),
                 body: $ref('editFirefighterBody'),
                 response: {
-                    204: $ref('responseSchema'),
+                    201: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }
@@ -96,7 +96,7 @@ async function firefighterRoutes(server: FastifyInstance) {
             schema: {
                 params: $ref('firefighterParamsSchema'),
                 response: {
-                    204: $ref('responseSchema'),
+                    201: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }

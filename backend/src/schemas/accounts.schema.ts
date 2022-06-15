@@ -18,6 +18,14 @@ const accountInput = {
     password: z.string()
 };
 
+const accountUpdate = {
+    email: z.string().email(),
+    firstname: z.string().optional(),
+    lastname: z.string().optional(),
+    phone: z.string().optional(),
+    description: z.string().optional(),
+};
+
 const accountSchema = z.object({
     ...accountGenerated,
     ...accountData
@@ -25,7 +33,14 @@ const accountSchema = z.object({
 
 const registerAccountSchema = z.object({
     ...accountInput,
-    confirmPassword: z.string()
+    confirmPassword: z.string(),
+});
+
+const updateAccountSchema = z.object({
+    ...accountUpdate,
+    password: z.string().optional(),
+    confirmPassword: z.string().optional(),
+    currentPassword: z.string().optional()
 });
 
 const loginAccountSchema = z.object({
@@ -56,15 +71,18 @@ const loginResponseSchema = z.object({
 
 const authenticateResponseSchema = z.object({
     success: z.boolean(),
-    message: z.string()
+    message: z.string(),
+    data: z.any()
 });
 
 export type RegisterAccountInput = z.infer<typeof registerAccountSchema>;
+export type UpdateAccountInput = z.infer<typeof updateAccountSchema>;
 export type LoginAccountInput = z.infer<typeof loginAccountSchema>;
 
 export const { schemas: accountSchemas, $ref } = buildJsonSchemas(
     {
         registerAccountSchema,
+        updateAccountSchema,
         loginAccountSchema,
         authenticateAccountSchema,
         accountSchema,

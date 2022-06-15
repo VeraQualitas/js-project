@@ -36,3 +36,22 @@ GET  http://localhost:5000/accounts/authenticate HTTP/2.1
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
+###
+
+### UPDATE
+PUT http://localhost:5000/accounts/update HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "email": {{email}},
+    "firstname": "njndfgdjnjghvcghvhgnjn",
+    "lastname": "vvghvgh",
+    "password": {{password}},
+    "confirmPassword": {{password}}
+}
+
+### GET MYSELF
+GET http://localhost:5000/accounts/me HTTP/2.1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}

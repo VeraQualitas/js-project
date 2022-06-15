@@ -1,0 +1,102 @@
+<div style="display: flex; justify-content: center; margin-top: 10vh">
+    <div class="container">
+
+        <h2>Dane konta</h2>
+
+        <div class="inputs-container">
+            <mat-form-field class="width-input" appearance="standard">
+                <mat-label>Adres email</mat-label>
+                <input type="email" matInput [(ngModel)]="account.email" placeholder="np. sth@example.com">
+                <mat-error *ngIf="false">
+                    Nieprawidłowy format
+                </mat-error>
+                <mat-error *ngIf="false">
+                    Adres email jest <strong>wymagany</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="width-input" appearance="standard">
+                <mat-label>Imię</mat-label>
+                <input type="text" matInput [(ngModel)]="account.firstname" placeholder="">
+                <mat-error *ngIf="false">
+                    Nieprawidłowy format
+                </mat-error>
+                <mat-error *ngIf="false">
+                    Adres email jest <strong>wymagany</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="width-input" appearance="standard">
+                <mat-label>Nazwisko</mat-label>
+                <input type="text" matInput [(ngModel)]="account.lastname" placeholder="">
+                <mat-error *ngIf="false">
+                    Nieprawidłowy format
+                </mat-error>
+                <mat-error *ngIf="false">
+                    Adres email jest <strong>wymagany</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="width-input" appearance="standard">
+                <mat-label>Telefon</mat-label>
+                <input type="text" matInput [(ngModel)]="account.phone" placeholder="">
+                <mat-error *ngIf="false">
+                    Nieprawidłowy format
+                </mat-error>
+                <mat-error *ngIf="false">
+                    Adres email jest <strong>wymagany</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="width-input" appearance="standard">
+                <mat-label>Nowe hasło</mat-label>
+                <input type="{{can_show ? 'text' : 'password'}}" matInput [(ngModel)]="account.password" placeholder="">
+                <button matSuffix mat-icon-button aria-label="Clear" (click)="can_show=!can_show">
+                    <mat-icon>{{can_show ? 'visibility' : 'visibility_off'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="false">
+                    Nieprawidłowy format
+                </mat-error>
+                <mat-error *ngIf="false">
+                    Adres email jest <strong>wymagany</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="width-input" appearance="standard">
+                <mat-label>Potwierdź nowe hasło</mat-label>
+                <input type="{{can_show_2 ? 'text' : 'password'}}" matInput [(ngModel)]="account.confirmPassword"
+                    placeholder="">
+                <button matSuffix mat-icon-button aria-label="Clear" (click)="can_show_2=!can_show_2">
+                    <mat-icon>{{can_show_2 ? 'visibility' : 'visibility_off'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="false">
+                    Nieprawidłowy format
+                </mat-error>
+                <mat-error *ngIf="false">
+                    Adres email jest <strong>wymagany</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="width-input" appearance="standard">
+                <mat-label>Aktualne hasło</mat-label>
+                <input type="{{can_show_3 ? 'text' : 'password'}}" matInput [(ngModel)]="account.currentPassword" placeholder="">
+                <button matSuffix mat-icon-button aria-label="Clear" (click)="can_show_3=!can_show_3">
+                    <mat-icon>{{can_show_3 ? 'visibility' : 'visibility_off'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="false">
+                    Nieprawidłowy format
+                </mat-error>
+                <mat-error *ngIf="false">
+                    Adres email jest <strong>wymagany</strong>
+                </mat-error>
+            </mat-form-field>
+
+        </div>
+
+        <div style="display: flex; gap: 16px; margin-top: 32px;">
+            <button routerLink="/" mat-stroked-button color="primary">Anuluj</button>
+            <button (click)="update();" mat-stroked-button color="accent">Zapisz</button>
+        </div>
+
+    </div>
+</div>

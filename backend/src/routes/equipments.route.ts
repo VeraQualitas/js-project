@@ -80,7 +80,7 @@ async function equipmentRoutes(server: FastifyInstance) {
                 params: $ref('equipmentParamsSchema'),
                 body: $ref('editEquipmentBody'),
                 response: {
-                    204: $ref('responseSchema'),
+                    201: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }
@@ -96,7 +96,7 @@ async function equipmentRoutes(server: FastifyInstance) {
             schema: {
                 params: $ref('vehicleAndEquipmentParamsSchema'),
                 response: {
-                    204: $ref('responseSchema'),
+                    201: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }
@@ -112,7 +112,7 @@ async function equipmentRoutes(server: FastifyInstance) {
             schema: {
                 params: $ref('equipmentParamsSchema'),
                 response: {
-                    204: $ref('responseSchema'),
+                    201: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }
@@ -128,7 +128,7 @@ async function equipmentRoutes(server: FastifyInstance) {
             schema: {
                 params: $ref('vehicleAndEquipmentParamsSchema'),
                 response: {
-                    204: $ref('responseSchema'),
+                    201: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }

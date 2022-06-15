@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 
 import { $ref } from "../schemas/accounts.schema";
-import { registerAccount, loginAccount, authenticateAccount } from '../controllers/accounts.controller';
+import { registerAccount, loginAccount, authenticateAccount, updateAccount, myAccount } from '../controllers/accounts.controller';
 import { e400Properties, e500Properties } from "./_error_opts";
 
 const path = '/accounts';
@@ -53,6 +53,39 @@ async function accountRoutes(server: FastifyInstance) {
         },
         authenticateAccount
     );
+
+    server.put(
+        path + '/update',
+        {
+            preHandler: [server.authorize],
+            schema: {
+                body: $ref('updateAccountSchema'),
+                response: {
+                    201: $ref('authenticateResponseSchema'),
+                    400: e400Properties,
+                    500: e500Properties,
+                }
+            }
+        },
+        updateAccount
+    );
+
+    server.get(
+        path + '/me',
+        {
+            preHandler: [server.authorize],
+            schema: {
+                // body: $ref('authenticateAccountSchema'),
+                response: {
+                    200: $ref('authenticateResponseSchema'),
+                    400: e400Properties,
+                    500: e500Properties,
+                }
+            }
+        },
+        myAccount
+    );
+
 };
 
 export default accountRoutes;

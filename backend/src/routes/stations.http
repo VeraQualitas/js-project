@@ -54,7 +54,7 @@ Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 {
-    "stationName": "12345",
+    "stationName": "123455",
     "country": "12345",
     "city": "12345",
     "street": "12345",

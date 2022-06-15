@@ -35,4 +35,84 @@ export class HttpService {
     );
   }
 
+  get_myself(token: string): Observable<any> {
+    return this.http.get<any>(
+      this.backend + '/accounts/me',
+      {
+        headers:
+          new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          })
+      }
+    );
+  }
+
+  update_me(token: string, data: any): Observable<any> {
+    return this.http.put<any>(
+      this.backend + '/accounts/update', data,
+      {
+        headers:
+          new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          })
+      }
+    );
+  }
+
+  get_stations(token: string): Observable<any> {
+    return this.http.get<any>(
+      this.backend + '/stations',
+      {
+        headers:
+          new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          })
+      }
+    );
+  }
+
+  add_station(data: any): Observable<any> {
+    const { token, ...rest } = data;
+    return this.http.post<any>(
+      this.backend + '/stations', rest,
+      {
+        headers:
+          new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          })
+      }
+    );
+  }
+
+  edit_station(data: any, stationId: any): Observable<any> {
+    const { token, ...rest } = data;
+    return this.http.put<any>(
+      this.backend + '/stations/' + stationId, rest,
+      {
+        headers:
+          new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          })
+      }
+    );
+  }
+
+  delete_station(token: string, stationId: any): Observable<any> {
+    return this.http.delete<any>(
+      this.backend + '/stations/' + stationId.toString(),
+      {
+        headers:
+          new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          })
+      }
+    );
+  }
+
 }

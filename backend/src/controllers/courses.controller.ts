@@ -142,7 +142,7 @@ export const updateCourse = async (request: FastifyRequest<{ Body: IUpdateCourse
             data: { course }
         };
 
-        reply.code(204).send(response);
+        reply.code(201).send(response);
 
     } catch (e) {
         console.error(e);
@@ -168,7 +168,7 @@ export const updateCourseFirefighter = async (request: FastifyRequest<{ Body: IU
             data: { firefighter }
         };
 
-        reply.code(204).send(response);
+        reply.code(201).send(response);
 
     } catch (e) {
         console.error(e);
@@ -194,7 +194,7 @@ export const deleteCourse = async (request: FastifyRequest<{ Params: IGetCourseP
             data: {}
         };
 
-        reply.code(204).send(response);
+        reply.code(201).send(response);
 
     } catch (e) {
         console.error(e);
@@ -220,7 +220,7 @@ export const deleteCourseFirefighter = async (request: FastifyRequest<{ Body: IU
             data: {}
         };
 
-        reply.code(204).send(response);
+        reply.code(201).send(response);
 
     } catch (e) {
         console.error(e);

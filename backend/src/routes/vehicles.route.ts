@@ -80,7 +80,7 @@ async function vehicleRoutes(server: FastifyInstance) {
                 params: $ref('vehicleParamsSchema'),
                 body: $ref('editVehicleBody'),
                 response: {
-                    204: $ref('responseSchema'),
+                    201: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }
@@ -96,7 +96,7 @@ async function vehicleRoutes(server: FastifyInstance) {
             schema: {
                 params: $ref('vehicleParamsSchema'),
                 response: {
-                    204: $ref('responseSchema'),
+                    201: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }

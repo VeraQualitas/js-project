@@ -313,7 +313,7 @@ export async function deleteStationService(user: UserType, stationId: number) {
                 where: { stationId }
             });
 
-            return success > 0 ? {} : null;
+            return success;
         });
 
     } catch (e) {

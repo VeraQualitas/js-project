@@ -137,7 +137,7 @@ export const updateVehicle = async (request: FastifyRequest<{ Body: IUpdateVehic
             data: { vehicle }
         };
 
-        reply.code(204).send(response);
+        reply.code(201).send(response);
 
     } catch (e) {
         console.error(e);
@@ -163,7 +163,7 @@ export const deleteVehicle = async (request: FastifyRequest<{ Params: IGetVehicl
             data: {}
         };
 
-        reply.code(204).send(response);
+        reply.code(201).send(response);
 
     } catch (e) {
         console.error(e);

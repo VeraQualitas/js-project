@@ -2,6 +2,7 @@ import {ChangeDetectorRef, Component} from '@angular/core';
 import {MediaMatcher} from "@angular/cdk/layout";
 import {CookiesService} from "./services/cookies.service";
 import {HttpService} from "./services/http.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ export class AppComponent {
 
   constructor(changeDetectorRef: ChangeDetectorRef,
               media: MediaMatcher,
+              private router: Router,
               private cookies: CookiesService,
               private http: HttpService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -47,6 +49,11 @@ export class AppComponent {
     else {
       document.body.classList.remove(this.dark);
     }
+  }
+
+  sign_out() {
+    this.cookies.delete_session();
+    document.location.reload();
   }
 
   ngOnDestroy(): void {

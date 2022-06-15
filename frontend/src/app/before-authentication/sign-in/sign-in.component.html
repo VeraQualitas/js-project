@@ -17,14 +17,17 @@
 
       <mat-form-field class="width-input" appearance="standard">
         <mat-label>Hasło</mat-label>
-        <input type="email" matInput [(ngModel)]="account.password" placeholder="Ex. pat@example.com">
+        <input type="{{can_show ? 'text' : 'password'}}" matInput [(ngModel)]="account.password" placeholder="">
+        <button matSuffix mat-icon-button aria-label="Clear" (click)="can_show=!can_show">
+            <mat-icon>{{can_show ? 'visibility' : 'visibility_off'}}</mat-icon>
+        </button>
         <mat-error *ngIf="false">
-          Nieprawidłowy format
+            Nieprawidłowy format
         </mat-error>
         <mat-error *ngIf="false">
-          Adres email jest <strong>wymagany</strong>
+            Adres email jest <strong>wymagany</strong>
         </mat-error>
-      </mat-form-field>
+    </mat-form-field>
 
       <div style="display: flex; gap: 16px; margin-top: 32px;">
         <button routerLink="/register" mat-stroked-button color="primary">Przejdź do rejestracji</button>

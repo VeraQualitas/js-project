@@ -36,6 +36,9 @@ export class CookiesService {
     this.cookieService.set('token', token, {path: '/'});
   }
 
+  public delete_session() {
+    this.cookieService.delete('token');
+  }
 
   public get_mode_data() {
     if (this.cookieService.check('mode')) {

@@ -112,7 +112,7 @@ async function stationRoutes(server: FastifyInstance) {
                 params: $ref('stationParamsSchema'),
                 body: $ref('editStationBody'),
                 response: {
-                    204: $ref('responseSchema'),
+                    201: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }
@@ -129,7 +129,7 @@ async function stationRoutes(server: FastifyInstance) {
                 params: $ref('accountsStationsParamsSchema'),
                 body: $ref('memberBody'),
                 response: {
-                    204: $ref('responseSchema'),
+                    201: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }
@@ -145,7 +145,7 @@ async function stationRoutes(server: FastifyInstance) {
             schema: {
                 params: $ref('stationParamsSchema'),
                 response: {
-                    204: $ref('responseSchema'),
+                    201: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }
@@ -161,7 +161,7 @@ async function stationRoutes(server: FastifyInstance) {
             schema: {
                 params: $ref('accountsStationsParamsSchema'),
                 response: {
-                    204: $ref('responseSchema'),
+                    201: $ref('responseSchema'),
                     400: e400Properties,
                     500: e500Properties,
                 }

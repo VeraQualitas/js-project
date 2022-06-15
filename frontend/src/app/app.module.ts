@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { ToastrModule } from 'ngx-toastr';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {MaterialModule} from "./material/material.module";
@@ -17,6 +19,13 @@ import {HttpService} from "./services/http.service";
 import { NotSignedOutComponent } from './after-authentication/not-signed-out/not-signed-out.component';
 import { SomethingWentWrongComponent } from './something-went-wrong/something-went-wrong.component';
 import { ExpiredSessionComponent } from './before-authentication/expired-session/expired-session.component';
+import { FirestationsComponent } from './after-authentication/firestations/firestations.component';
+import { FiremenComponent } from './after-authentication/firemen/firemen.component';
+import { VehiclesComponent } from './after-authentication/vehicles/vehicles.component';
+import { EquipmentsComponent } from './after-authentication/equipments/equipments.component';
+import { CoursesComponent } from './after-authentication/courses/courses.component';
+import { AccountSettingsComponent } from './after-authentication/account-settings/account-settings.component';
+import { MembersComponent } from './after-authentication/members/members.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +35,14 @@ import { ExpiredSessionComponent } from './before-authentication/expired-session
     HomeComponent,
     NotSignedOutComponent,
     SomethingWentWrongComponent,
-    ExpiredSessionComponent
+    ExpiredSessionComponent,
+    FirestationsComponent,
+    FiremenComponent,
+    VehiclesComponent,
+    EquipmentsComponent,
+    CoursesComponent,
+    AccountSettingsComponent,
+    MembersComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +50,7 @@ import { ExpiredSessionComponent } from './before-authentication/expired-session
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     ReactiveFormsModule,
     MaterialModule,
     // ToastrModule.forRoot(),

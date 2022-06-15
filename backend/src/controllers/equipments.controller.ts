@@ -146,7 +146,7 @@ export const updateEquipment = async (request: FastifyRequest<{ Body: IUpdateEqu
             data: { equipment }
         };
 
-        reply.code(204).send(response);
+        reply.code(201).send(response);
 
     } catch (e) {
         console.error(e);
@@ -172,7 +172,7 @@ export const updateVehicleEquipment = async (request: FastifyRequest<{ Params: I
             data: {}
         };
 
-        reply.code(204).send(response);
+        reply.code(201).send(response);
 
     } catch (e) {
         console.error(e);
@@ -198,7 +198,7 @@ export const deleteEquipment = async (request: FastifyRequest<{ Params: IGetEqui
             data: {}
         };
 
-        reply.code(204).send(response);
+        reply.code(201).send(response);
 
     } catch (e) {
         console.error(e);
@@ -224,7 +224,7 @@ export const deleteVehicleEquipment = async (request: FastifyRequest<{ Params: I
             data: {}
         };
 
-        reply.code(204).send(response);
+        reply.code(201).send(response);
 
     } catch (e) {
         console.error(e);

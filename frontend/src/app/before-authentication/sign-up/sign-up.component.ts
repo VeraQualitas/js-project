@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { HttpService } from "../../services/http.service";
 
 @Component({
@@ -11,6 +11,7 @@ import { HttpService } from "../../services/http.service";
 export class SignUpComponent implements OnInit {
 
   can_show = false;
+  can_show_2 = false;;
 
   account = {
     email: '',
@@ -25,6 +26,7 @@ export class SignUpComponent implements OnInit {
 
   constructor(
     private http: HttpService,
+    private toastr: ToastrService,
     private router: Router
     ) {}
 
@@ -38,17 +40,10 @@ export class SignUpComponent implements OnInit {
       next: response => { console.log(response); this.router.navigate(['login']); },
       error: err => {
         console.log(err);
-        // this.alert.clear();
-        // this.alert.error(err.error[responses.message], 'Błąd');
-        // this.getOrganizationInfo();
+        this.toastr.clear();
+        this.toastr.error(err.error.message, 'Błąd');
       },
-      complete: () => {
-        // this.alert.clear();
-        // this.alert.success('Zmieniono pomyślnie.', 'Sukces!');
-        // this.getOrganizationInfo();
-        // this.closeModal();
-
-      }
+      complete: () => {}
     });
   }
 }

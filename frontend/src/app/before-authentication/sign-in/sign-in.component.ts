@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { CookiesService } from 'src/app/services/cookies.service';
 import { HttpService } from 'src/app/services/http.service';
 
@@ -12,9 +13,12 @@ export class SignInComponent implements OnInit {
 
   constructor(
     private http: HttpService,
+    private toastr: ToastrService,
     private router: Router,
     private cookie: CookiesService
   ) { }
+
+  can_show = false;
 
   account = {
     email: '',
@@ -36,7 +40,8 @@ export class SignInComponent implements OnInit {
         this.router.navigate(['']); 
       },
       error: err => {
-        console.log(err);
+        this.toastr.clear();
+        this.toastr.error(err.error.message, 'Błąd');
       },
       complete: () => {}
     });
